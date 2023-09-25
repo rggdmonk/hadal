@@ -1,0 +1,79 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hadal"
+description = "Tool for mining/alignment parallel texts"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Pavel Stepachev" }]
+maintainers = [{ name = "Pavel Stepachev" }]
+keywords = ["parallel corpora", "text alignment", "text processing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = ["numpy", "torch", "transformers", "tqdm"]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = ["black>=23.9", "coverage>=7.3", "pytest>=7.4", "pytest-cov>=4.1"]
+
+[tool.hatch.version]
+path = "hadal/__init__.py"
+
+[tool.ruff]
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+select = [
+    "E",    # pycodestyle (E)
+    "W",    # pycodestyle (W)
+    "F",    # Pyflakes (F)
+    "I",    # isort (I)
+    "B",    # flake8-bugbear (B)
+    "N",    # pep8-naming (N)
+    "UP",   # pyupgrade (UP)
+    "FBT",  # flake8-boolean-trap (FBT)
+    "A",    # flake8-builtins (A)
+    "C4",   # flake8-comprehensions (C4)
+    "EM",   # flake8-errmsg (EM)
+    "G",    # flake8-logging-format (G)
+    "PIE",  # flake8-pie (PIE)
+    "PYI",  # flake8-pyi (PYI)
+    "PT",   # flake8-pytest-style (PT)
+    "SIM",  # flake8-simplify (SIM)
+    "TCH",  # flake8-type-checking (TCH)
+    "ARG",  # flake8-unused-arguments (ARG)
+    "PTH",  # flake8-use-pathlib (PTH)
+    "PL",   # Pylint (PL)
+    "TRY",  # tryceratops (TRY)
+    "NPY",  # NumPy-specific rules (NPY)
+    "PERF", # Perflint (PERF)
+    "RUF",  # Ruff-specific rules (RUF)
+    "ANN",
+    "FA",
+    "D",
+]
+
+ignore = [
+    "E501",    # line too long, handled by black
+    "B008",    # do not perform function calls in argument defaults
+    "PLR0913", # too many arguments in function call
+    "ANN101",  # missing type annotation for self in method
+]
+
+[tool.ruff.per-file-ignores]
+"hadal/tests/*" = ["ANN001", "ANN201", "S101", "ARG", "FBT", "D"]
+"*.ipynb" = ["D100"]
+"hadal/__init__.py" = ["D104"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+
+[tool.black]
+line-length = 130
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
