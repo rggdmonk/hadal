@@ -47,9 +47,6 @@ class FaissSearch:
             knn_metric (str, optional): The metric to use for k-nearest neighbor search. Can be "inner_product" or "l2". Defaults to "inner_product".
             device (str | None, optional): The device to use for Faiss search. If None, it will use the device specified in the constructor. Defaults to None.
 
-        Raises:
-            NotImplementedError: If device is not "cpu".
-
         Returns:
             tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the distances and indices of the k-nearest neighbors.
         """
@@ -68,8 +65,9 @@ class FaissSearch:
             # https://github.com/facebookresearch/faiss/blob/d85601d972af2d64103769ab8d940db28aaae2a0/faiss/python/extra_wrappers.py#L330
             d, ind = faiss.knn(xq=source_embeddings, xb=target_embeddings, k=k, metric=knn_metric)
         else:
-            exception_msg = "Faiss GPU is not implemented yet!"
-            raise NotImplementedError(exception_msg)
+            self.logger.info("Using faiss knn on GPU...")
+            res = faiss.StandardGpuResources()
+            d, ind = faiss.gpu_knn(res=res, xq=source_embeddings, xb=target_embeddings, k=k, metric_type=knn_metric)
 
         self.logger.info("Done k-nearest neighbor search!")
         return d, ind
