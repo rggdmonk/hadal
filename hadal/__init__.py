@@ -1,3 +1,4 @@
+"""Top-level package for `hadal`."""
 __version__ = "0.0.1"
 
 from hadal.huggingface_automodel import HuggingfaceAutoModel  # noqa: F401, I001

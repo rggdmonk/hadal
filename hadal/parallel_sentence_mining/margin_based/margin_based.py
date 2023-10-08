@@ -21,7 +21,7 @@ class MarginBasedPipeline:
         enable_logging: bool = True,
         log_level: int | None = logging.INFO,
     ) -> None:
-        """Initializes a MarginBasedPipeline object.
+        """Initialize a MarginBasedPipeline object.
 
         Args:
             model_name_or_path (str | None, optional): The name or path of the Hugging Face model to use. Defaults to None.

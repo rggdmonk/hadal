@@ -8,7 +8,7 @@ def default_custom_logger(
     level: int | None = logging.DEBUG,
     log_format: str | None = None,
 ) -> logging.Logger:
-    """Returns a logger object with the specified name, logging level, and format.
+    """Return a logger object with the specified name, logging level, and format.
 
     Args:
         name (str): The name of the logger.

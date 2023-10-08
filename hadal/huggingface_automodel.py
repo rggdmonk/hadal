@@ -20,7 +20,7 @@ class HuggingfaceAutoModel:
         enable_logging: bool = True,
         log_level: int | None = None,
     ) -> None:
-        """Initializes the HuggingfaceAutoModel.
+        """Initialize the HuggingfaceAutoModel.
 
         Args:
             model_name_or_path (str): The name or path of the pre-trained model to use.
@@ -58,7 +58,7 @@ class HuggingfaceAutoModel:
         normalize_embeddings: bool = False,
         device: str | None = None,
     ) -> list[torch.Tensor] | torch.Tensor | numpy.ndarray:
-        """Encodes the given sentences into embeddings.
+        """Encode the given sentences into embeddings.
 
         Args:
             sentences (str | list[str]): The sentences to encode.
@@ -119,19 +119,20 @@ class HuggingfaceAutoModel:
         return all_embeddings
 
     def _text_length(self, text: list[str] | list | str) -> int:
-        """Calculates the length of the given text.
+        """Calculate the length of the given text.
 
         Args:
-            text (list[str] | list | str): The text to calculate the length of.
+            text (list[str] | list | str): The text.
 
         Returns:
             int: The length of the text.
         """
         if isinstance(text, dict):
             msg = "Input cannot be a dictionary."
-            return ValueError(msg)
+            raise TypeError(msg)
         if isinstance(text, tuple):
-            return ValueError("Input cannot be a tuple.")
+            msg = "Input cannot be a tuple."
+            raise TypeError(msg)
 
         if not hasattr(text, "__len__"):  # no len() method
             return 1
@@ -144,11 +145,11 @@ def batch_to_device(batch, target_device: torch.device):  # noqa: ANN201, ANN001
     """Move a batch of tensors to the specified device.
 
     Args:
-        batch (Dict[str, torch.Tensor]): The batch of tensors to move.
+        batch: The batch of tensors to move.
         target_device (torch.device): The target device to move the tensors to.
 
     Returns:
-        Dict[str, torch.Tensor]: The batch of tensors moved to the target device.
+        The batch of tensors moved to the target device.
     """
     for key in batch:
         if isinstance(batch[key], torch.Tensor):

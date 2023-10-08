@@ -20,10 +20,10 @@ class MarginBased:
     """
 
     def __init__(self) -> None:
-        """Initializes a MarginBased object."""
+        """Initialize a MarginBased object."""
 
     def select_margin(self, margin: str = "ratio") -> Callable:
-        """Selects a margin function based on the given margin parameter.
+        """Select a margin function based on the given margin parameter.
 
         Args:
             margin (str, optional): The type of margin function to select. Valid options are "ratio" and "distance". Defaults to "ratio".
@@ -53,7 +53,7 @@ class MarginBased:
         bwd_mean: float,
         margin: Callable,
     ) -> float:
-        """Computes the margin-based score between source and target embeddings.
+        """Compute the margin-based score between source and target embeddings.
 
         Args:
             source_embeddings (numpy.ndarray): Embeddings of the source sentence.
@@ -78,7 +78,7 @@ class MarginBased:
         bwd_mean: float,
         margin: Callable,
     ) -> numpy.ndarray:
-        """Computes the margin-based score for a set of candidate pairs of source and target embeddings.
+        """Compute the margin-based score for a set of candidate pairs of source and target embeddings.
 
         Args:
             source_embeddings (numpy.ndarray): The source embeddings.
@@ -114,7 +114,7 @@ class MarginBased:
         bwd_scores: numpy.ndarray,
         strategy: str = "max_score",
     ) -> tuple[numpy.ndarray, numpy.ndarray]:
-        """Selects the best candidates for parallel sentences based on the given strategy.
+        """Select the best candidates for parallel sentences based on the given strategy.
 
         Args:
             source_embeddings (numpy.ndarray): Embeddings of the source sentences.
