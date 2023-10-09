@@ -24,8 +24,8 @@ class FaissSearch:
 
         Args:
             device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
-            enable_logging (bool): Whether to enable logging. Defaults is `True`.
-            log_level (int | None, optional): The logging level. Defaults to `logging.INFO`.
+            enable_logging (bool): Logging option. Default is `True`.
+            log_level (int | None, optional): Logging level. Default is `logging.INFO`.
         """
         if enable_logging is True:
             self.logger = default_custom_logger(name=__name__, level=log_level)
@@ -50,11 +50,11 @@ class FaissSearch:
         """Perform k-nearest neighbor search using Faiss.
 
         Args:
-            source_embeddings (numpy.ndarray): The source embeddings to search from.
-            target_embeddings (numpy.ndarray): The target embeddings to search in.
-            k (int): The number of nearest neighbors to return. Defaults to `4`.
-            knn_metric (str): The metric to use for k-nearest neighbor search. Can be `inner_product` or `l2`. Default is `inner_product`.
-            device (str | None, optional): The device to use for Faiss search. If `None`, it will use the device specified in the constructor. Default is `None`.
+            source_embeddings (numpy.ndarray): The source embeddings.
+            target_embeddings (numpy.ndarray): The target embeddings.
+            k (int): The number of nearest neighbors. Default is `4`.
+            knn_metric (str): The metric to use for k-nearest neighbor search. `inner_product` or `l2`. Default is `inner_product`.
+            device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
 
         Returns:
             tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the distances and indices of the k-nearest neighbors.

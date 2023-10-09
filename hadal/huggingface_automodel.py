@@ -1,5 +1,8 @@
-"""A wrapper class for Hugging Face's AutoModel that provides additional functionality for encoding text."""
+"""This module contains a class `HuggingfaceAutoModel` that can be used to encode text using a Huggingface AutoModel."""
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 import numpy
 import torch
@@ -8,25 +11,32 @@ from transformers import AutoConfig, AutoModel, AutoTokenizer
 
 from hadal.custom_logger import default_custom_logger
 
+if TYPE_CHECKING:
+    import pathlib
+
 
 class HuggingfaceAutoModel:
-    """A wrapper class for Hugging Face's AutoModel that provides additional functionality for encoding text."""
+    """Class to encode text using a Huggingface AutoModel.
+
+    Methods:
+        encode: Encode text using a Huggingface AutoModel.
+    """
 
     def __init__(
         self,
-        model_name_or_path: str,
+        model_name_or_path: str | pathlib.Path,
         device: str | None = None,
         *,
         enable_logging: bool = True,
-        log_level: int | None = None,
+        log_level: int | None = logging.INFO,
     ) -> None:
-        """Initialize the HuggingfaceAutoModel.
+        """Initialize HuggingfaceAutoModel object.
 
         Args:
-            model_name_or_path (str): The name or path of the pre-trained model to use.
-            device (str | None, optional): The device to run the model on. Defaults to None.
-            enable_logging (bool, optional): Whether to enable logging. Defaults to True.
-            log_level (int | None, optional): The level of logging to use. Defaults to None.
+            model_name_or_path (str | pathlib.Path): Name or path to the pre-trained model.
+            device (str | None, optional): Device for the model. Default is `None`.
+            enable_logging (bool): Logging option. Default is `True`.
+            log_level (int | None, optional): Logging level. Default is `logging.INFO`.
         """
         if enable_logging is True:
             self.logger = default_custom_logger(name=__name__, level=log_level)
@@ -58,18 +68,18 @@ class HuggingfaceAutoModel:
         normalize_embeddings: bool = False,
         device: str | None = None,
     ) -> list[torch.Tensor] | torch.Tensor | numpy.ndarray:
-        """Encode the given sentences into embeddings.
+        """Encode text using a Huggingface AutoModel.
 
         Args:
             sentences (str | list[str]): The sentences to encode.
-            batch_size (int, optional): The batch size to use. Defaults to 32.
-            output_value (str, optional): The type of output to use. Defaults to "pooler_output".
-            convert_to (str | None, optional): The type to convert the output to. Defaults to None.
-            normalize_embeddings (bool, optional): Whether to normalize the embeddings. Defaults to False.
-            device (str | None, optional): The device to run the model on. Defaults to None.
+            batch_size (int): The batch size. Default is `32`.
+            output_value (str): Model output type. Can be `pooler_output` or `last_hidden_state`. Default is `pooler_output`.
+            convert_to (str | None, optional): Convert the embeddings to `torch` or `numpy` format. If `torch`, it will return a `torch.Tensor`. If `numpy`, it will return a `numpy.ndarray`. If `None`, it will return a `list[torch.Tensor]`. Default is `None`.
+            normalize_embeddings (bool): Normalize the embeddings. Default is `False`.
+            device (str | None, optional): Device for the model. Default is `None`.
 
         Raises:
-            NotImplementedError: If the output_value is not implemented.
+            NotImplementedError: If the `output_value` is not implemented.
 
         Returns:
             list[torch.Tensor] | torch.Tensor | numpy.ndarray: The embeddings of the sentences.
@@ -119,19 +129,23 @@ class HuggingfaceAutoModel:
         return all_embeddings
 
     def _text_length(self, text: list[str] | list | str) -> int:
-        """Calculate the length of the given text.
+        """Calculate the length of the given sentences.
 
         Args:
-            text (list[str] | list | str): The text.
+            text (list[str] | list | str): The sentences.
+
+        Raises:
+            TypeError: Input cannot be a `dict`.
+            TypeError: Input cannot be a `tuple`.
 
         Returns:
             int: The length of the text.
         """
         if isinstance(text, dict):
-            msg = "Input cannot be a dictionary."
+            msg = "Input cannot be a `dict`."
             raise TypeError(msg)
         if isinstance(text, tuple):
-            msg = "Input cannot be a tuple."
+            msg = "Input cannot be a `tuple`."
             raise TypeError(msg)
 
         if not hasattr(text, "__len__"):  # no len() method
@@ -142,15 +156,7 @@ class HuggingfaceAutoModel:
 
 
 def batch_to_device(batch, target_device: torch.device):  # noqa: ANN201, ANN001
-    """Move a batch of tensors to the specified device.
-
-    Args:
-        batch: The batch of tensors to move.
-        target_device (torch.device): The target device to move the tensors to.
-
-    Returns:
-        The batch of tensors moved to the target device.
-    """
+    """Move a batch of tensors to the specified device."""
     for key in batch:
         if isinstance(batch[key], torch.Tensor):
             batch[key] = batch[key].to(target_device)
