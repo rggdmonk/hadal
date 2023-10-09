@@ -1,4 +1,6 @@
 """This module contains a custom logger function that can be used to create a logger with a specified name, level, and format."""
+from __future__ import annotations
+
 import logging
 
 
@@ -11,7 +13,7 @@ def default_custom_logger(
 
     Args:
         name (str): The name of the logger.
-        level (int | None, optional): The logging level. Default `logging.DEBUG`.
+        level (int | None, optional): The logging level. Default is `logging.DEBUG`.
         log_format (str | None, optional): The format of the log messages. If not specified, the default format is `%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s`.
 
     Returns:

@@ -1,22 +1,31 @@
-"""This module provides a class for performing k-nearest neighbor search using the Faiss library."""
+"""This module contains a class `FaissSearch` that can be used to perform k-nearest neighbor search using the Faiss library."""
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 import faiss
-import numpy
 
 from hadal.custom_logger import default_custom_logger
 
+if TYPE_CHECKING:
+    import numpy
+
 
 class FaissSearch:
-    """A class for performing k-nearest neighbor search using Faiss library."""
+    """Class to perform k-nearest neighbor search using the Faiss library.
+
+    Methods:
+        k_nearest_neighbors: Perform k-nearest neighbor search using Faiss.
+    """
 
     def __init__(self, device: str | None = None, *, enable_logging: bool = True, log_level: int | None = logging.INFO) -> None:
         """Initialize FaissSearch object.
 
         Args:
-            device (str | None, optional): The device to use for Faiss search. If None, it will use GPU if available, otherwise CPU. Defaults to None.
-            enable_logging (bool, optional): Whether to enable logging. Defaults to True.
-            log_level (int | None, optional): The logging level. Defaults to logging.INFO.
+            device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
+            enable_logging (bool): Whether to enable logging. Defaults is `True`.
+            log_level (int | None, optional): The logging level. Defaults to `logging.INFO`.
         """
         if enable_logging is True:
             self.logger = default_custom_logger(name=__name__, level=log_level)
@@ -34,7 +43,7 @@ class FaissSearch:
         self,
         source_embeddings: numpy.ndarray,
         target_embeddings: numpy.ndarray,
-        k: int | None = 4,
+        k: int = 4,
         knn_metric: str = "inner_product",
         device: str | None = None,
     ) -> tuple[numpy.ndarray, numpy.ndarray]:
@@ -43,9 +52,9 @@ class FaissSearch:
         Args:
             source_embeddings (numpy.ndarray): The source embeddings to search from.
             target_embeddings (numpy.ndarray): The target embeddings to search in.
-            k (int | None, optional): The number of nearest neighbors to return. Defaults to 4.
-            knn_metric (str, optional): The metric to use for k-nearest neighbor search. Can be "inner_product" or "l2". Defaults to "inner_product".
-            device (str | None, optional): The device to use for Faiss search. If None, it will use the device specified in the constructor. Defaults to None.
+            k (int): The number of nearest neighbors to return. Defaults to `4`.
+            knn_metric (str): The metric to use for k-nearest neighbor search. Can be `inner_product` or `l2`. Default is `inner_product`.
+            device (str | None, optional): The device to use for Faiss search. If `None`, it will use the device specified in the constructor. Default is `None`.
 
         Returns:
             tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the distances and indices of the k-nearest neighbors.
