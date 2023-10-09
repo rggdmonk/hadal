@@ -1,4 +1,4 @@
-# hadal
+# About
 
 ![PyPI - Version](https://img.shields.io/pypi/v/hadal)
 
@@ -6,6 +6,8 @@
 
 **hadal** ```/ˈheɪdəl/``` is a simple and efficient tool for mining and aligning sentences with pre-trained models.
 
-## Documentation
+# Implemented methods
 
-The documentation is available at
+| Level    | Method                                                   | Alignment type |
+| -------- | -------------------------------------------------------- | -------------- |
+| sentence | [margin-based](parallel_sentence_mining/margin_based.md) | `one-to-one`   |

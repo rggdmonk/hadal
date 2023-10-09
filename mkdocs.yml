@@ -1,0 +1,74 @@
+site_name: hadal
+theme:
+  name: material
+  features:
+    - navigation.expand
+    - navigation.footer
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+      primary: deep purple
+      accent: purple
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+      primary: deep purple
+      accent: lime
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - pymdownx.tabbed:
+      alternate_style: true
+  - markdown.extensions.abbr:
+  - markdown.extensions.admonition:
+  - markdown.extensions.attr_list:
+  - markdown.extensions.footnotes:
+  - markdown.extensions.meta:
+  - markdown.extensions.tables:
+  - markdown.extensions.toc:
+      permalink: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [hadal]
+        options:
+          docstring_style: google
+          allow_inspection: true
+          show_source: false
+          show_root_toc_entry: true
+          show_symbol_type_heading: false
+
+copyright: |
+  &copy; 2023 <a href="https://github.com/rggdmonk"  target="_blank" rel="noopener">Pavel Stepachev</a>
+
+nav:
+  - Home:
+      - index.md
+      - installation.md
+  - Parallel Sentences:
+      - parallel_text.md
+      - parallel_sentence_mining/margin_based.md
