@@ -16,17 +16,18 @@ theme:
   language: en
   palette:
     - scheme: default
+      primary: white
+      accent: amber
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/weather-night
         name: Switch to dark mode
-      primary: deep purple
-      accent: purple
+
     - scheme: slate
+      primary: black
+      accent: amber
       toggle:
-        icon: material/toggle-switch
+        icon: material/weather-sunny
         name: Switch to light mode
-      primary: deep purple
-      accent: lime
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -51,16 +52,33 @@ markdown_extensions:
 
 plugins:
   - search
+  - section-index
+  - gen-files:
+      scripts:
+        - docs/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
   - mkdocstrings:
       handlers:
         python:
-          paths: [hadal]
-        options:
-          docstring_style: google
-          allow_inspection: true
-          show_source: false
-          show_root_toc_entry: true
-          show_symbol_type_heading: false
+          paths:
+            - hadal
+          options:
+            docstring_style: google
+            allow_inspection: true
+            show_bases: true
+            show_source: true
+            heading_level: 3
+            show_root_heading: true
+            show_root_full_path: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            docstring_section_style: list
+            annotations_path: source
+            separate_signature: true
+            line_length: 80
+            show_signature: true
+            show_signature_annotations: true
 
 copyright: |
   &copy; 2023 <a href="https://github.com/rggdmonk"  target="_blank" rel="noopener">Pavel Stepachev</a>
@@ -72,3 +90,4 @@ nav:
   - Parallel Sentences:
       - parallel_text.md
       - parallel_sentence_mining/margin_based.md
+  - API: reference/
