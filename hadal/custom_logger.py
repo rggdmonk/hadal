@@ -1,5 +1,4 @@
-"""Creates a module containing a function for creating a custom logger with a specified name, log level, and format."""
-
+"""This module contains a custom logger function that can be used to create a logger with a specified name, level, and format."""
 import logging
 
 
@@ -8,11 +7,11 @@ def default_custom_logger(
     level: int | None = logging.DEBUG,
     log_format: str | None = None,
 ) -> logging.Logger:
-    """Return a logger object with the specified name, logging level, and format.
+    """Create a logger with a specified name, level, and format.
 
     Args:
         name (str): The name of the logger.
-        level (int | None, optional): The logging level. Defaults to `logging.DEBUG`.
+        level (int | None, optional): The logging level. Default `logging.DEBUG`.
         log_format (str | None, optional): The format of the log messages. If not specified, the default format is `%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s`.
 
     Returns:
