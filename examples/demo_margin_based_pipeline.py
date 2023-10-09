@@ -1,4 +1,4 @@
-"""Demonstrate how to use the Hadal library for text alignment."""
+"""Demonstrate how to use the MarginBasedPipeline."""
 
 import hadal
 
