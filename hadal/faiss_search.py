@@ -4,7 +4,7 @@ import logging
 import faiss
 import numpy
 
-from hadal.cutstom_logger import default_custom_logger
+from hadal.custom_logger import default_custom_logger
 
 
 class FaissSearch:

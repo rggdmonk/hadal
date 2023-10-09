@@ -3,7 +3,7 @@ import logging
 
 import numpy
 
-from hadal.cutstom_logger import default_custom_logger
+from hadal.custom_logger import default_custom_logger
 from hadal.faiss_search import FaissSearch
 from hadal.huggingface_automodel import HuggingfaceAutoModel
 from hadal.parallel_sentence_mining.margin_based.margin_based_tools import MarginBased

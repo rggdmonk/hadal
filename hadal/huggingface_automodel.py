@@ -6,7 +6,7 @@ import torch
 from tqdm.autonotebook import trange
 from transformers import AutoConfig, AutoModel, AutoTokenizer
 
-from hadal.cutstom_logger import default_custom_logger
+from hadal.custom_logger import default_custom_logger
 
 
 class HuggingfaceAutoModel:
