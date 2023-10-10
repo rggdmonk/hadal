@@ -1,20 +1,30 @@
-"""This module contains the MarginBasedPipeline class, which is a pipeline for aligning parallel sentences using margin-based scoring."""
-import logging
+"""This module contains the `class MarginBasedPipeline` that implements the margin-based pipeline."""
+from __future__ import annotations
 
-import numpy
+import logging
+from typing import TYPE_CHECKING
 
 from hadal.custom_logger import default_custom_logger
 from hadal.faiss_search import FaissSearch
 from hadal.huggingface_automodel import HuggingfaceAutoModel
 from hadal.parallel_sentence_mining.margin_based.margin_based_tools import MarginBased
 
+if TYPE_CHECKING:
+    import pathlib
+
+    import numpy
+
 
 class MarginBasedPipeline:
-    """Pipeline for aligning parallel sentences using margin-based scoring."""
+    """Class that implements the margin-based pipeline.
+
+    Methods:
+        make_alignments: Make sentence alignments.
+    """
 
     def __init__(
         self,
-        model_name_or_path: str | None = None,
+        model_name_or_path: str | pathlib.Path,
         model_device: str | None = None,
         faiss_device: str | None = None,
         *,
@@ -24,11 +34,11 @@ class MarginBasedPipeline:
         """Initialize a MarginBasedPipeline object.
 
         Args:
-            model_name_or_path (str | None, optional): The name or path of the Hugging Face model to use. Defaults to None.
-            model_device (str | None, optional): The device to use for the model. Defaults to None.
-            faiss_device (str | None, optional): The device to use for Faiss search. Defaults to None.
-            enable_logging (bool, optional): Whether to enable logging. Defaults to True.
-            log_level (int | None, optional): The logging level to use. Defaults to logging.INFO.
+            model_name_or_path (str | pathlib.Path): Name or path to the pre-trained model.
+            model_device (str | None, optional): Device for the model. Default is `None`.
+            faiss_device (str | None, optional): Device for the Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
+            enable_logging (bool, optional): Logging option. Default is `True`.
+            log_level (int | None, optional):  Logging level. Default is `logging.INFO`.
         """
         self.model = HuggingfaceAutoModel(
             model_name_or_path=model_name_or_path,
@@ -60,25 +70,22 @@ class MarginBasedPipeline:
         margin: str = "ratio",
         strategy: str = "max_score",
     ) -> list[tuple[numpy.float64, str, str]]:
-        """Compute sentence alignments between source and target sentences using margin-based scoring.
+        """Make sentence alignments.
 
         Args:
-            source_sentences: A list of strings representing the source sentences.
-            target_sentences: A list of strings representing the target sentences.
-            batch_size: An integer representing the batch size for encoding the sentences.
-            output_value: A string representing the output value to use for encoding the sentences.
-            convert_to: A string representing the format to convert the encoded embeddings to.
-            normalize_embeddings: A boolean indicating whether to normalize the embeddings.
-            knn_neighbors: An integer representing the number of nearest neighbors to consider in kNN search.
-            knn_metric: A string representing the metric to use for kNN search.
-            margin: A string representing the margin function to use for scoring.
-            strategy: A string representing the strategy to use for selecting the best candidates.
+            source_sentences (list[str]): Source sentences.
+            target_sentences (list[str]): Target sentences.
+            batch_size (int, optional): The batch size. Default is `32`.
+            output_value (str, optional): Model output type. Can be `pooler_output` or `last_hidden_state`. Default is `pooler_output`.
+            convert_to (str, optional): Convert the embeddings to `torch` or `numpy` format. If `torch`, it will return a `torch.Tensor`. If `numpy`, it will return a `numpy.ndarray`. If `None`, it will return a `list[torch.Tensor]`. Default is `None`.
+            normalize_embeddings (bool, optional): Normalize the embeddings. Default is `False`.
+            knn_neighbors (int, optional): The number of nearest neighbors. Default is `4`.
+            knn_metric (str, optional): The metric to use for k-nearest neighbor search. `inner_product` or `l2`. Default is `inner_product`.
+            margin (str, optional): The margin function to use. Valid options are `ratio` and `distance`. Default is `ratio`.
+            strategy (str, optional): The strategy to use for selecting the best candidates. Default is `max_score`.
 
         Returns:
-            A list of tuples representing the aligned sentence pairs, where each tuple contains:
-            - A float representing the alignment score.
-            - A string representing the source sentence.
-            - A string representing the target sentence.
+            list[tuple[numpy.float64, str, str]]: _description_
         """
         self.logger.info("Encoding embeddings for source sentences...")
         source_embeddings = self.model.encode(

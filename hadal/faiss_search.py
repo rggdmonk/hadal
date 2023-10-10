@@ -23,8 +23,8 @@ class FaissSearch:
         """Initialize FaissSearch object.
 
         Args:
-            device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
-            enable_logging (bool): Logging option. Default is `True`.
+            device (str | None, optional): Device for the Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
+            enable_logging (bool, optional): Logging option. Default is `True`.
             log_level (int | None, optional): Logging level. Default is `logging.INFO`.
         """
         if enable_logging is True:
@@ -52,8 +52,8 @@ class FaissSearch:
         Args:
             source_embeddings (numpy.ndarray): The source embeddings.
             target_embeddings (numpy.ndarray): The target embeddings.
-            k (int): The number of nearest neighbors. Default is `4`.
-            knn_metric (str): The metric to use for k-nearest neighbor search. `inner_product` or `l2`. Default is `inner_product`.
+            k (int, optional): The number of nearest neighbors. Default is `4`.
+            knn_metric (str, optional): The metric to use for k-nearest neighbor search. `inner_product` or `l2`. Default is `inner_product`.
             device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
 
         Returns:

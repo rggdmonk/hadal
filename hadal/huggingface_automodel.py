@@ -35,7 +35,7 @@ class HuggingfaceAutoModel:
         Args:
             model_name_or_path (str | pathlib.Path): Name or path to the pre-trained model.
             device (str | None, optional): Device for the model. Default is `None`.
-            enable_logging (bool): Logging option. Default is `True`.
+            enable_logging (bool, optional): Logging option. Default is `True`.
             log_level (int | None, optional): Logging level. Default is `logging.INFO`.
         """
         if enable_logging is True:
@@ -72,10 +72,10 @@ class HuggingfaceAutoModel:
 
         Args:
             sentences (str | list[str]): The sentences to encode.
-            batch_size (int): The batch size. Default is `32`.
-            output_value (str): Model output type. Can be `pooler_output` or `last_hidden_state`. Default is `pooler_output`.
+            batch_size (int, optional): The batch size. Default is `32`.
+            output_value (str, optional): Model output type. Can be `pooler_output` or `last_hidden_state`. Default is `pooler_output`.
             convert_to (str | None, optional): Convert the embeddings to `torch` or `numpy` format. If `torch`, it will return a `torch.Tensor`. If `numpy`, it will return a `numpy.ndarray`. If `None`, it will return a `list[torch.Tensor]`. Default is `None`.
-            normalize_embeddings (bool): Normalize the embeddings. Default is `False`.
+            normalize_embeddings (bool, optional): Normalize the embeddings. Default is `False`.
             device (str | None, optional): Device for the model. Default is `None`.
 
         Raises:
