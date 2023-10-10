@@ -1,5 +1,19 @@
 site_name: hadal
+site_description: A simple and eﬀicient tool for mining and aligning sentences with pre-trained models.
+site_author: Pavel Stepachev
+repo_name: rggdmonk/hadal
+repo_url: https://github.com/rggdmonk/hadal
+copyright: |
+  &copy; 2023-present <a href="https://github.com/rggdmonk"  target="_blank" rel="noopener">Pavel Stepachev</a>
+
+edit_uri: edit/main/docs/
+
 theme:
+  logo: assets_img/hadal_logo.svg
+  favicon: assets_img/hadal_logo.svg
+  icon:
+    repo: fontawesome/brands/github
+    annotation: material/arrow-right-circle-outline
   name: material
   features:
     - navigation.expand
@@ -11,20 +25,21 @@ theme:
     - search.suggest
     - search.highlight
     - content.tabs.link
+    - content.code.select
     - content.code.annotation
     - content.code.copy
   language: en
   palette:
     - scheme: default
       primary: white
-      accent: amber
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
 
     - scheme: slate
       primary: black
-      accent: amber
+      accent: deep orange
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -49,6 +64,12 @@ markdown_extensions:
   - markdown.extensions.tables:
   - markdown.extensions.toc:
       permalink: true
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - search
@@ -81,9 +102,6 @@ plugins:
             show_signature_annotations: true
             members_order: source
             filters: []
-
-copyright: |
-  &copy; 2023 <a href="https://github.com/rggdmonk"  target="_blank" rel="noopener">Pavel Stepachev</a>
 
 nav:
   - Home:
