@@ -24,7 +24,7 @@ class MarginBased:
         Source: https://arxiv.org/pdf/1811.01136.pdf 3.1 Margin-based scoring
 
         Args:
-            margin (str, optional): The margin function to use. Valid options are `ratio` and `distance`. Default is `ratio`.
+            margin (str, optional): The margin function to use. Valid options are `ratio` and `distance`.
 
         Raises:
             NotImplementedError: If the given `margin` is not implemented.
@@ -121,7 +121,7 @@ class MarginBased:
             target_embeddings (numpy.ndarray): Target embeddings.
             y2x_ind (numpy.ndarray): Indices of the source sentences corresponding to each target sentence.
             bwd_scores (numpy.ndarray): Scores of the backward alignment between target and source sentences.
-            strategy (str, optional): The strategy to use for selecting the best candidates. Default is `max_score`.
+            strategy (str, optional): The strategy to use for selecting the best candidates.
 
         Raises:
             NotImplementedError: If the given `strategy` is not implemented.

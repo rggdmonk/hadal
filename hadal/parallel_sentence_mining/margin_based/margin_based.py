@@ -35,10 +35,10 @@ class MarginBasedPipeline:
 
         Args:
             model_name_or_path (str | pathlib.Path): Name or path to the pre-trained model.
-            model_device (str | None, optional): Device for the model. Default is `None`.
-            faiss_device (str | None, optional): Device for the Faiss search. If `None`, it will use GPU if available, otherwise CPU. Default is `None`.
-            enable_logging (bool, optional): Logging option. Default is `True`.
-            log_level (int | None, optional):  Logging level. Default is `logging.INFO`.
+            model_device (str | None, optional): Device for the model.
+            faiss_device (str | None, optional): Device for the Faiss search. If `None`, it will use GPU if available, otherwise CPU.
+            enable_logging (bool, optional): Logging option.
+            log_level (int | None, optional):  Logging level.
         """
         self.model = HuggingfaceAutoModel(
             model_name_or_path=model_name_or_path,
@@ -75,17 +75,17 @@ class MarginBasedPipeline:
         Args:
             source_sentences (list[str]): Source sentences.
             target_sentences (list[str]): Target sentences.
-            batch_size (int, optional): The batch size. Default is `32`.
-            output_value (str, optional): Model output type. Can be `pooler_output` or `last_hidden_state`. Default is `pooler_output`.
-            convert_to (str, optional): Convert the embeddings to `torch` or `numpy` format. If `torch`, it will return a `torch.Tensor`. If `numpy`, it will return a `numpy.ndarray`. If `None`, it will return a `list[torch.Tensor]`. Default is `None`.
-            normalize_embeddings (bool, optional): Normalize the embeddings. Default is `False`.
-            knn_neighbors (int, optional): The number of nearest neighbors. Default is `4`.
-            knn_metric (str, optional): The metric to use for k-nearest neighbor search. `inner_product` or `l2`. Default is `inner_product`.
-            margin (str, optional): The margin function to use. Valid options are `ratio` and `distance`. Default is `ratio`.
-            strategy (str, optional): The strategy to use for selecting the best candidates. Default is `max_score`.
+            batch_size (int, optional): The batch size.
+            output_value (str, optional): Model output type. Can be `pooler_output` or `last_hidden_state`.
+            convert_to (str, optional): Convert the embeddings to `torch` or `numpy` format. If `torch`, it will return a `torch.Tensor`. If `numpy`, it will return a `numpy.ndarray`. If `None`, it will return a `list[torch.Tensor]`.
+            normalize_embeddings (bool, optional): Normalize the embeddings.
+            knn_neighbors (int, optional): The number of nearest neighbors.
+            knn_metric (str, optional): The metric to use for k-nearest neighbor search. Can be `inner_product` or `l2`.
+            margin (str, optional): The margin function to use. Valid options are `ratio` and `distance`.
+            strategy (str, optional): The strategy to use for selecting the best candidates.
 
         Returns:
-            list[tuple[numpy.float64, str, str]]: _description_
+            list[tuple[numpy.float64, str, str]]: The `list[tuple[score, source_sentence, target_sentence]]` of the best sentence alignments.
         """
         self.logger.info("Encoding embeddings for source sentences...")
         source_embeddings = self.model.encode(

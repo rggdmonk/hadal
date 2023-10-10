@@ -13,8 +13,8 @@ def default_custom_logger(
 
     Args:
         name (str): The name of the logger.
-        level (int | None, optional): Logging level. Default is `logging.INFO`.
-        log_format (str | None, optional): The format of the log messages. If not specified, the default format is `%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s`.
+        level (int | None, optional): Logging level.
+        log_format (str | None, optional): The format of the log messages. If `None`, the default format is `%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s`.
 
     Returns:
         logging.Logger: A logger object with the specified name, logging level, and format.
