@@ -1,41 +1,37 @@
-"""A module that implements MarginBased class for margin-based scoring for parallel sentence mining."""
+"""The module contains a class `MarginBased` that implements the margin-based scoring for parallel sentence mining."""
 from collections.abc import Callable
 
 import numpy
 
 
 class MarginBased:
-    """A class that implements margin-based scoring for parallel sentence mining.
-
-    Attributes:
-        None
+    """Class that implements the margin-based scoring for parallel sentence mining.
 
     Methods:
-        select_margin: Selects the margin function based on the parameter.
-        margin_based_score: Computes the margin-based score for a given source and target embedding.
-        margin_based_score_candidates: Computes the margin-based score for a set of candidate pairs.
-        select_best_candidates: Selects the best candidate pairs based on the strategy.
-        get_sentence_pairs: Returns the sentence pairs with the highest margin-based scores.
-
+        select_margin: Select the margin function.
+        margin_based_score: Compute the margin-based score.
+        margin_based_score_candidates: Compute the margin-based scores for a batch of sentence pairs.
+        select_best_candidates: Select the best sentence pairs.
+        get_sentence_pairs: Get the sentence pairs.
     """
 
     def __init__(self) -> None:
         """Initialize a MarginBased object."""
 
     def select_margin(self, margin: str = "ratio") -> Callable:
-        """Select a margin function based on the given margin parameter.
+        """Select the margin function.
+
+        Source: https://arxiv.org/pdf/1811.01136.pdf 3.1 Margin-based scoring
 
         Args:
-            margin (str, optional): The type of margin function to select. Valid options are "ratio" and "distance". Defaults to "ratio".
+            margin (str): The margin function to use. Valid options are `ratio` and `distance`. Default is `ratio`.
 
         Raises:
-            NotImplementedError: If the given margin type is not implemented.
+            NotImplementedError: If the given `margin` is not implemented.
 
         Returns:
-            Callable: The selected margin function.
+            Callable: The margin function.
         """
-        # https://arxiv.org/pdf/1811.01136.pdf 3.1 Margin-based scoring
-
         if margin == "ratio":
             margin = lambda a, b: a / b  # noqa
         elif margin == "distance":
@@ -49,24 +45,24 @@ class MarginBased:
         self,
         source_embeddings: numpy.ndarray,
         target_embeddings: numpy.ndarray,
-        fwd_mean: float,
-        bwd_mean: float,
+        fwd_mean: numpy.ndarray,
+        bwd_mean: numpy.ndarray,
         margin: Callable,
-    ) -> float:
-        """Compute the margin-based score between source and target embeddings.
+    ) -> numpy.ndarray:
+        """Compute the margin-based score.
+
+        Source: https://arxiv.org/pdf/1811.01136.pdf 3.1 Margin-based scoring
 
         Args:
-            source_embeddings (numpy.ndarray): Embeddings of the source sentence.
-            target_embeddings (numpy.ndarray): Embeddings of the target sentence.
-            fwd_mean (float): Mean of forward scores.
-            bwd_mean (float): Mean of backward scores.
-            margin (Callable): Margin function to be used.
+            source_embeddings (numpy.ndarray): Source embeddings.
+            target_embeddings (numpy.ndarray): Target embeddings.
+            fwd_mean (numpy.ndarray): The forward mean.
+            bwd_mean (numpy.ndarray): The backward mean.
+            margin (Callable): The margin function.
 
         Returns:
-            float: Margin-based score between source and target embeddings.
+            numpy.ndarray: Margin-based score.
         """
-        # https://arxiv.org/pdf/1811.01136.pdf 3.1 Margin-based scoring
-
         return margin(source_embeddings.dot(target_embeddings), (fwd_mean + bwd_mean) / 2)
 
     def margin_based_score_candidates(
@@ -74,18 +70,18 @@ class MarginBased:
         source_embeddings: numpy.ndarray,
         target_embeddings: numpy.ndarray,
         candidate_inds: numpy.ndarray,
-        fwd_mean: float,
-        bwd_mean: float,
+        fwd_mean: numpy.ndarray,
+        bwd_mean: numpy.ndarray,
         margin: Callable,
     ) -> numpy.ndarray:
-        """Compute the margin-based score for a set of candidate pairs of source and target embeddings.
+        """Compute the margin-based scores for a batch of sentence pairs.
 
         Args:
-            source_embeddings (numpy.ndarray): The source embeddings.
-            target_embeddings (numpy.ndarray): The target embeddings.
+            source_embeddings (numpy.ndarray): Source embeddings.
+            target_embeddings (numpy.ndarray): Target embeddings.
             candidate_inds (numpy.ndarray): The indices of the candidate target embeddings for each source embedding.
-            fwd_mean (float): The forward mean.
-            bwd_mean (float): The backward mean.
+            fwd_mean (numpy.ndarray): The forward mean.
+            bwd_mean (numpy.ndarray): The backward mean.
             margin (Callable): The margin function.
 
         Returns:
@@ -114,22 +110,25 @@ class MarginBased:
         bwd_scores: numpy.ndarray,
         strategy: str = "max_score",
     ) -> tuple[numpy.ndarray, numpy.ndarray]:
-        """Select the best candidates for parallel sentences based on the given strategy.
+        """Select the best sentence pairs.
+
+        Source: https://arxiv.org/pdf/1811.01136.pdf 3.2 Candidate generation and filtering (only max. score)
 
         Args:
-            source_embeddings (numpy.ndarray): Embeddings of the source sentences.
+            source_embeddings (numpy.ndarray): Source embeddings.
             x2y_ind (numpy.ndarray): Indices of the target sentences corresponding to each source sentence.
             fwd_scores (numpy.ndarray): Scores of the forward alignment between source and target sentences.
-            target_embeddings (numpy.ndarray): Embeddings of the target sentences.
+            target_embeddings (numpy.ndarray): Target embeddings.
             y2x_ind (numpy.ndarray): Indices of the source sentences corresponding to each target sentence.
             bwd_scores (numpy.ndarray): Scores of the backward alignment between target and source sentences.
-            strategy (str, optional): The strategy to use for selecting the best candidates. Defaults to "max_score".
+            strategy (str): The strategy to use for selecting the best candidates. Default is `max_score`.
+
+        Raises:
+            NotImplementedError: If the given `strategy` is not implemented.
 
         Returns:
-            tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the indices and scores of the best candidates.
+            tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the indices and scores of the best sentence pairs.
         """
-        # https://arxiv.org/pdf/1811.01136.pdf 3.2 Candidate generation and filtering (only max. score)
-
         if strategy == "max_score":
             fwd_best = x2y_ind[numpy.arange(source_embeddings.shape[0]), fwd_scores.argmax(axis=1)]
             bwd_best = y2x_ind[numpy.arange(target_embeddings.shape[0]), bwd_scores.argmax(axis=1)]
@@ -156,18 +155,16 @@ class MarginBased:
         source_sentences: list[str],
         target_sentences: list[str],
     ) -> list[tuple[numpy.float64, str, str]]:
-        """Given a set of indices, scores, source sentences, and target sentences, returns a list of sentence pairs with their corresponding scores.
-
-        The sentence pairs are selected based on the highest scores and the constraint that each source sentence and target sentence can only appear once in the list.
+        """Get the sentence pairs.
 
         Args:
             indices (numpy.ndarray): An array of indices representing the sentence pairs.
             scores (numpy.ndarray): An array of scores representing the similarity between the sentence pairs.
-            source_sentences (list[str]): A list of source sentences.
-            target_sentences (list[str]): A list of target sentences.
+            source_sentences (list[str]): Source sentences.
+            target_sentences (list[str]): Target sentences.
 
         Returns:
-            list[tuple[numpy.float64, str, str]]: A list of sentence pairs with their corresponding scores.
+            list[tuple[numpy.float64, str, str]]: A list of tuples with score, source sentences and target sentences.
         """
         seen_src, seen_trg = set(), set()
 
