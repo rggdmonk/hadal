@@ -1,4 +1,4 @@
-"""The module contains a class `MarginBased` that implements the margin-based scoring for parallel sentence mining."""
+"""The module contains the `class MarginBased` that implements the margin-based scoring for parallel sentence mining."""
 from collections.abc import Callable
 
 import numpy

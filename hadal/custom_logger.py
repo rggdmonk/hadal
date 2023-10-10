@@ -1,4 +1,4 @@
-"""This module contains a custom logger function that can be used to create a logger with a specified name, level, and format."""
+"""This module contains the `fuction default custom logger` that can be used to create a logger with a specified name, level, and format."""
 from __future__ import annotations
 
 import logging

@@ -1,4 +1,4 @@
-"""This module contains a class `HuggingfaceAutoModel` that can be used to encode text using a Huggingface AutoModel."""
+"""This module contains the `class HuggingfaceAutoModel` that can be used to encode text using a Huggingface AutoModel."""
 from __future__ import annotations
 
 import logging

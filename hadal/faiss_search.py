@@ -1,4 +1,4 @@
-"""This module contains a class `FaissSearch` that can be used to perform k-nearest neighbor search using the Faiss library."""
+"""This module contains the `class FaissSearch` that can be used to perform k-nearest neighbor search using the Faiss library."""
 from __future__ import annotations
 
 import logging
