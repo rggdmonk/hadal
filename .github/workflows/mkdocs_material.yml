@@ -1,4 +1,4 @@
-name: ci
+name: Build and Deploy MkDocs Material to GitHub Pages
 on:
   push:
     branches:

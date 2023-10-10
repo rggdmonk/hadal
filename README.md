@@ -8,4 +8,4 @@
 
 ## Documentation
 
-The documentation is available at
+The documentation is available [here](https://pavelstepachev.xyz/hadal/).
