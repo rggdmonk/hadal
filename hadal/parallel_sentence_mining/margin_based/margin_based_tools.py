@@ -30,16 +30,16 @@ class MarginBased:
             NotImplementedError: If the given `margin` is not implemented.
 
         Returns:
-            Callable: The margin function.
+            margin_func (Callable): The margin function.
         """
         if margin == "ratio":
-            margin = lambda a, b: a / b  # noqa
+            margin_func = lambda a, b: a / b  # noqa
         elif margin == "distance":
-            margin = lambda a, b: a - b  # noqa
+            margin_func = lambda a, b: a - b  # noqa
         else:
             msg = f"margin=`{margin}` is not implemented"
             raise NotImplementedError(msg)
-        return margin
+        return margin_func
 
     def margin_based_score(
         self,
@@ -47,7 +47,7 @@ class MarginBased:
         target_embeddings: numpy.ndarray,
         fwd_mean: numpy.ndarray,
         bwd_mean: numpy.ndarray,
-        margin: Callable,
+        margin_func: Callable,
     ) -> numpy.ndarray:
         """Compute the margin-based score.
 
@@ -58,12 +58,14 @@ class MarginBased:
             target_embeddings (numpy.ndarray): Target embeddings.
             fwd_mean (numpy.ndarray): The forward mean.
             bwd_mean (numpy.ndarray): The backward mean.
-            margin (Callable): The margin function.
+            margin_func (Callable): The margin function.
 
         Returns:
-            numpy.ndarray: Margin-based score.
+            score (numpy.ndarray): Margin-based score.
         """
-        return margin(source_embeddings.dot(target_embeddings), (fwd_mean + bwd_mean) / 2)
+        score = margin_func(source_embeddings.dot(target_embeddings), (fwd_mean + bwd_mean) / 2)
+
+        return score
 
     def margin_based_score_candidates(
         self,
@@ -85,7 +87,7 @@ class MarginBased:
             margin (Callable): The margin function.
 
         Returns:
-            numpy.ndarray: The margin-based scores for the candidate pairs.
+            scores (numpy.ndarray): The margin-based scores for the candidate pairs.
         """
         scores = numpy.zeros(candidate_inds.shape)
         for i in range(scores.shape[0]):
@@ -127,7 +129,8 @@ class MarginBased:
             NotImplementedError: If the given `strategy` is not implemented.
 
         Returns:
-            tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the indices and scores of the best sentence pairs.
+            - indices (numpy.ndarray): An array of indices representing the sentence pairs.
+            - scores (numpy.ndarray): An array of scores representing the similarity between the sentence pairs.
         """
         if strategy == "max_score":
             fwd_best = x2y_ind[numpy.arange(source_embeddings.shape[0]), fwd_scores.argmax(axis=1)]
@@ -164,7 +167,7 @@ class MarginBased:
             target_sentences (list[str]): Target sentences.
 
         Returns:
-            list[tuple[numpy.float64, str, str]]: A list of tuples with score, source sentences and target sentences.
+            bitext_list (list[tuple[numpy.float64, str, str]]): A list of tuples with score, source sentences and target sentences.
         """
         seen_src, seen_trg = set(), set()
 

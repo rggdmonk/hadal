@@ -17,7 +17,7 @@ def default_custom_logger(
         log_format (str | None, optional): The format of the log messages. If `None`, the default format is `%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s`.
 
     Returns:
-        logging.Logger: A logger object with the specified name, logging level, and format.
+        logger (logging.Logger): A logger object with the specified name, logging level, and format.
     """
     if log_format is None:
         log_format = "%(asctime)s | %(name)s | %(module)s | %(levelname)s | %(message)s"

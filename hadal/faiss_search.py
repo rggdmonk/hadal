@@ -57,7 +57,8 @@ class FaissSearch:
             device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU.
 
         Returns:
-            tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the distances and indices of the k-nearest neighbors.
+            - d (numpy.ndarray): The distances of the k-nearest neighbors.
+            - ind (numpy.ndarray): The indices of the k-nearest neighbors.
         """
         if device is None:
             device = self._target_device

@@ -82,7 +82,7 @@ class HuggingfaceAutoModel:
             NotImplementedError: If the `output_value` is not implemented.
 
         Returns:
-            list[torch.Tensor] | torch.Tensor | numpy.ndarray: The embeddings of the sentences.
+            all_embeddings (list[torch.Tensor] | torch.Tensor | numpy.ndarray): The embeddings of the sentences.
         """
         if device is None:
             device = self._target_device
@@ -139,7 +139,7 @@ class HuggingfaceAutoModel:
             TypeError: Input cannot be a `tuple`.
 
         Returns:
-            int: The length of the text.
+            length (int): The length of the text.
         """
         if isinstance(text, dict):
             msg = "Input cannot be a `dict`."

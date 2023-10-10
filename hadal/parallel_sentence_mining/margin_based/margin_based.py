@@ -85,7 +85,7 @@ class MarginBasedPipeline:
             strategy (str, optional): The strategy to use for selecting the best candidates.
 
         Returns:
-            list[tuple[numpy.float64, str, str]]: The `list[tuple[score, source_sentence, target_sentence]]` of the best sentence alignments.
+            bitext_list (list[tuple[numpy.float64, str, str]]): The `list[tuple[score, source_sentence, target_sentence]]` of the best sentence alignments.
         """
         self.logger.info("Encoding embeddings for source sentences...")
         source_embeddings = self.model.encode(

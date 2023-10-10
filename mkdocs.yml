@@ -80,6 +80,7 @@ plugins:
             show_signature: true
             show_signature_annotations: true
             members_order: source
+            filters: []
 
 copyright: |
   &copy; 2023 <a href="https://github.com/rggdmonk"  target="_blank" rel="noopener">Pavel Stepachev</a>
