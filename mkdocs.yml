@@ -93,3 +93,6 @@ nav:
       - parallel_text.md
       - parallel_sentence_mining/margin_based.md
   - API: reference/
+
+extra_css:
+  - stylesheets/extra.css
