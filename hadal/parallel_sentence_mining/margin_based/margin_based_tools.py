@@ -1,5 +1,10 @@
 """The module contains the `class MarginBased` that implements the margin-based scoring for parallel sentence mining."""
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 import numpy
 
