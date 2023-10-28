@@ -83,3 +83,10 @@ line-length = 130
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+addopts = ["--cov=hadal", "--cov-report=html:coverage_report_html"]
+filterwarnings = [
+    "ignore:.*distutils Version classes are deprecated. Use packaging.version instead*:DeprecationWarning", # faiss and setuptools
+]
+
+[tool.coverage.run]
+omit = ["*/tests/*"]
