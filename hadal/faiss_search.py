@@ -53,8 +53,14 @@ class FaissSearch:
             source_embeddings (numpy.ndarray): The source embeddings.
             target_embeddings (numpy.ndarray): The target embeddings.
             k (int, optional): The number of nearest neighbors.
-            knn_metric (str, optional): The metric to use for k-nearest neighbor search. Can be `inner_product` or `l2`.
+            knn_metric (str, optional): The metric to use for k-nearest neighbor search. Can be `inner_product` or `sqeuclidean`.
             device (str | None, optional): The device to use for Faiss search. If `None`, it will use GPU if available, otherwise CPU.
+
+        Note:
+            It is fully relying on the Faiss library for the k-nearest neighbor search `faiss.knn` and `faiss.gpu_knn`.
+
+            - `inner_product` uses `faiss.METRIC_INNER_PRODUCT`
+            - `sqeuclidean` uses `faiss.METRIC_L2` (squared Euclidean distance)
 
         Returns:
             - d (numpy.ndarray): The distances of the k-nearest neighbors.
@@ -67,7 +73,8 @@ class FaissSearch:
 
         if knn_metric == "inner_product":
             knn_metric = faiss.METRIC_INNER_PRODUCT
-        elif knn_metric == "l2":
+        elif knn_metric == "sqeuclidean":
+            # squared Euclidean (L2) distance
             knn_metric = faiss.METRIC_L2
 
         if device == "cpu":
