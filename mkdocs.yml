@@ -110,7 +110,8 @@ nav:
   - Parallel Sentences:
       - parallel_text.md
       - parallel_sentence_mining/margin_based.md
-  - API: reference/
+  - API reference:
+      - hadal: reference/
 
 extra_css:
   - stylesheets/extra.css
