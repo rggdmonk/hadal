@@ -28,4 +28,5 @@ jobs:
           mkdocstrings \
           mkdocstrings-python \
           pymdown-extensions \
+          black \
       - run: mkdocs gh-deploy --force

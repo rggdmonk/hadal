@@ -64,6 +64,7 @@ markdown_extensions:
   - markdown.extensions.tables:
   - markdown.extensions.toc:
       permalink: true
+  - pymdownx.magiclink
   - attr_list
   - md_in_html
   - pymdownx.superfences
@@ -97,7 +98,7 @@ plugins:
             docstring_section_style: list
             annotations_path: source
             separate_signature: true
-            line_length: 60
+            line_length: 80
             show_signature: true
             show_signature_annotations: true
             members_order: source
@@ -111,7 +112,7 @@ nav:
       - parallel_text.md
       - parallel_sentence_mining/margin_based.md
   - API reference:
-      - hadal: reference/
+      - hadal: api_reference/
 
 extra_css:
   - stylesheets/extra.css
