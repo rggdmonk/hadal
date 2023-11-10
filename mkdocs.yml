@@ -97,7 +97,7 @@ plugins:
             docstring_section_style: list
             annotations_path: source
             separate_signature: true
-            line_length: 80
+            line_length: 60
             show_signature: true
             show_signature_annotations: true
             members_order: source
